@@ -1,0 +1,70 @@
+.react-calendar-heatmap text {
+  font-size: 5px;
+  font-family: 'Onest', sans-serif;
+  fill: white;
+}
+
+.react-calendar-heatmap .react-calendar-heatmap-small-text {
+  font-size: 5px;
+  font-family: 'Onest', sans-serif;
+  fill: white;
+}
+
+
+.react-calendar-heatmap rect:hover {
+  stroke: white;
+  stroke-width: 0.5px;
+}
+
+/*
+ * Default color scale
+ */
+
+.react-calendar-heatmap .color-empty {
+  fill: #909090;
+}
+
+.react-calendar-heatmap .color-filled {
+  fill: #8cc665;
+}
+
+/*
+ * Github color scale
+ */
+
+.react-calendar-heatmap .color-github-0 {
+  fill: #eeeeee;
+}
+.react-calendar-heatmap .color-github-1 {
+  fill: #eeccd7;
+}
+.react-calendar-heatmap .color-github-2 {
+  fill: #ced1f4;
+}
+.react-calendar-heatmap .color-github-3 {
+  fill: #c7e3d3;
+}
+.react-calendar-heatmap .color-github-4 {
+  fill: #c7e3d3;
+}
+
+/*
+ * Gitlab color scale
+ */
+
+.react-calendar-heatmap .color-gitlab-0 {
+  fill: #2e2e2e; /* dark gray for empty cells */
+}
+.react-calendar-heatmap .color-gitlab-1 {
+  fill: #ffcf99; /* light orange */
+}
+.react-calendar-heatmap .color-gitlab-2 {
+  fill: #ff9b22; /* your main orange */
+}
+.react-calendar-heatmap .color-gitlab-3 {
+  fill: #b9ff66; /* your main green */
+}
+.react-calendar-heatmap .color-gitlab-4 {
+  fill: #66ff22; /* brighter green for very active days */
+}
+
