@@ -30,11 +30,7 @@ function SubmissionHistory() {
     fetchingQuestions();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("Updated questions:", questions);
-  //  console.log('type of date' , typeof(questions.createdAt))
-  // }, [questions]);
-
+ 
   if (loading) {
     return (
       <div className="w-full text-center text-white font-Onest py-10 animate-pulse">
@@ -71,7 +67,7 @@ function SubmissionHistory() {
     <Container>
       <div className="flex gap-4 items-center justify-center mt-4 text-white font-Onest">
         <button
-          className={`px-4 py-2 rounded ${
+          className={`px-4 py-1 rounded ${
             filter === "all" ? "bg-[#b9ff66] text-black" : "bg-gray-700"
           }`}
           onClick={() => setFilter("all")}
@@ -79,7 +75,7 @@ function SubmissionHistory() {
           All
         </button>
         <button
-          className={`px-4 py-2 rounded ${
+          className={`px-4 py-1 rounded ${
             filter === "revision" ? "bg-[#b9ff66] text-black" : "bg-gray-700"
           }`}
           onClick={() => setFilter("revision")}
@@ -106,7 +102,7 @@ function SubmissionHistory() {
         </select>
       </div>
 
-      <div className="flex flex-col gap-4 p-4 pt-16 items-center">
+      <div className="flex flex-col gap-4 p-4 pt-5 items-center">
         {filteredQuestions.map((q) => (
           <Questionbox key={q._id} {...q} />
         ))}

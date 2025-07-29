@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import Input from "../components/Input.jsx";
 import { useDispatch } from "react-redux";
 import { useLogin } from "../auth/auth.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
@@ -40,10 +40,9 @@ function Login() {
 
   return (
     <Container>
-      <div className="items-center mt-5 mb-5">
-        <h2 className=" text-center font-bold text-2xl  text-white font-Onest">Welcome back!</h2>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto p-6 bg-[#1f1f1f] font-Onest border-white shadow rounded-lg space-y-4">
+     <div className="justify-center align-center">
+       <form   onSubmit={handleSubmit(onSubmit)} className="max-w-md w-full mt-20 mx-auto p-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg space-y-6">
+
         <h2 className="text-2xl font-Onest text-white font-bold text-center">Login</h2>
 
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
@@ -71,8 +70,16 @@ function Login() {
         >
           {loading ? "Logging in..." : "Login"}
         </button>
+         <p className="text-center text-sm text-white">
+          Don't have an account?{" "}
+          <Link to="/sign-up" className="text-[#ff9b22] hover:underline">
+            Sign Up!
+          </Link>
+        </p>
       </form>
+      </div>
     </Container>
+
   );
 }
 

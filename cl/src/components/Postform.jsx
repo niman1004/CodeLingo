@@ -56,7 +56,7 @@ function Postform() {
   };
 
   return (
-    <div className="w-full bg-[#1f1f1f] rounded-xl p-4">
+    <div className="w-full bg-[#1f1f1f] rounded-xl p-4 ">
       {/* Heading and Submit Button */}
       <div className="flex items-center justify-between mb-2 ml-4 mr-4">
         <div className="font-Onest text-white font-bold text-2xl">
