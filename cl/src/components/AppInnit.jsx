@@ -64,7 +64,7 @@ const AppInnit = ({ router }) => {
         localStorage.removeItem("accessToken");
       }
     };
-     checkAuthStatus();
+     //checkAuthStatus(); 
   }, [dispatch, accessToken]);
 
   return <RouterProvider router={router} />;
