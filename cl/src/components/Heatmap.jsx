@@ -53,7 +53,7 @@ function Heatmap() {
     };
 
     fetchHMdata();
-  }, [heatmapData]);
+  }, [userData]);
 
   return (
     <div className="bg-[#1f1f1f] mt-3 mr-4 p-6 rounded-xl">
