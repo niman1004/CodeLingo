@@ -13,7 +13,8 @@ const AppInnit = ({ router }) => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        let token = accessToken || localStorage.getItem("accessToken");
+        let token = accessToken 
+        // || localStorage.getItem("accessToken");
 
         if (token) {
           const response = await fetch(`${conf.API_URL}/user/current`, {
@@ -27,7 +28,7 @@ const AppInnit = ({ router }) => {
           if (response.ok) {
             const data = await response.json();
             dispatch(login({ userData: data.data, accessToken: token }));
-            localStorage.setItem("accessToken", token); // sync localStorage with Redux
+            // localStorage.setItem("accessToken", token); // sync localStorage with Redux
             return;
           }
         }
@@ -50,18 +51,18 @@ const AppInnit = ({ router }) => {
             dispatch(
               login({ userData: data.data.user, accessToken: newAccessToken })
             );
-            localStorage.setItem("accessToken", newAccessToken); // sync localStorage with Redux
+            // localStorage.setItem("accessToken", newAccessToken); // sync localStorage with Redux
             return;
           }
         }
 
         // Logout if everything fails
         dispatch(logout());
-        localStorage.removeItem("accessToken");
+        // localStorage.removeItem("accessToken");
       } catch (error) {
         console.error("Error checking auth status:", error);
         dispatch(logout());
-        localStorage.removeItem("accessToken");
+        // localStorage.removeItem("accessToken");
       }
     };
      checkAuthStatus(); 
