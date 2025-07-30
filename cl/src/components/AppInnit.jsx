@@ -12,43 +12,47 @@ const AppInnit = ({ router }) => {
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-     try {
-      const response= await fetch(`${conf.API_URL}/user/current` , {
-        method:"GET",
-        credentials:"include"
-      });
-
-      if(response.ok){
-        const data= await response.json();
-        dispatch(login({userData: data.data.user}))
-        return;
-      }
-
-      //trying to refresh token if above failed
-      const refreshed= await refreshAccessToken();
-
-      if(refreshed){
-        const retryResponse= await fetch(`${conf.API_URL}/user/current` , {
+      try {
+        const response = await fetch(`${conf.API_URL}/user/current`, {
           method: "GET",
-          credentials:"include"
+          credentials: "include",
         });
 
-        if(retryResponse.ok){
-          const data= await retryResponse.json();
-          dispatch(login({userData:data.data.user}));
+        if (response.ok) {
+          const data = await response.json();
+          localStorage.setItem("userData", JSON.stringify(data.data.user));
+          dispatch(login({ userData: data.data.user }));
+
           return;
         }
-      }
-      dispatch(logout());
-     } catch (error) {
-      console.error('error checking auth status' , error);
-      dispatch(logout());
-    }
-      
-     }
 
-     checkAuthStatus();
-    } , [dispatch]);
+        //trying to refresh token if above failed
+        const refreshed = await refreshAccessToken();
+
+        if (refreshed) {
+          const retryResponse = await fetch(`${conf.API_URL}/user/current`, {
+            method: "GET",
+            credentials: "include",
+          });
+
+          if (retryResponse.ok) {
+            const data = await retryResponse.json();
+            localStorage.setItem("userData", JSON.stringify(data.data.user));
+            dispatch(login({ userData: data.data.user }));
+
+            return;
+          }
+        }
+        dispatch(logout());
+      } catch (error) {
+        console.error("error checking auth status", error);
+        localStorage.removeItem("userData");
+        dispatch(logout());
+      }
+    };
+
+    checkAuthStatus();
+  }, [dispatch]);
 
   return <RouterProvider router={router} />;
 };
