@@ -4,11 +4,13 @@ import Input from "./Input";
 import { useSelector, useDispatch } from "react-redux";
 import { useSubmitQuestion } from "../auth/questions.js";
 import { useGetCurrentUser } from "../auth/auth.js";
+import { setUserData } from "../store/authSlice.js";
 
 function Postform() {
   const userData = useSelector((state) => state.auth.userData);
   const submitQuestion = useSubmitQuestion();
   const getCurrentUser = useGetCurrentUser();
+  const dispatch= useDispatch()
 
   const { register, handleSubmit, reset } = useForm();
   const [tags, setTags] = useState([]);
@@ -30,6 +32,10 @@ function Postform() {
 
       if (result?.success) {
         alert("Question submitted successfully!");
+        const updatedUserData= await getCurrentUser()
+        if(updatedUserData){
+          dispatch(setUserData(updatedUserData))
+        }
         setTags([]);
         reset();
       } else {
