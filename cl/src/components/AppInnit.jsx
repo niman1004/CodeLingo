@@ -12,61 +12,43 @@ const AppInnit = ({ router }) => {
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-      try {
-        let token = accessToken 
-        // || localStorage.getItem("accessToken");
+     try {
+      const response= await fetch(`${conf.API_URL}/user/current` , {
+        method:"GET",
+        credentials:"include"
+      });
 
-        if (token) {
-          const response = await fetch(`${conf.API_URL}/user/current`, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            dispatch(login({ userData: data.data, accessToken: token }));
-            // localStorage.setItem("accessToken", token); // sync localStorage with Redux
-            return;
-          }
-        }
-
-        // If no token or fetch failed → try to refresh token
-        const newAccessToken = await refreshAccessToken();
-
-        if (newAccessToken) {
-          const response = await fetch(`${conf.API_URL}/user/current`, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${newAccessToken}`,
-            },
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            console.log("CURR USER DATA:::", data);
-            dispatch(
-              login({ userData: data.data.user, accessToken: newAccessToken })
-            );
-            // localStorage.setItem("accessToken", newAccessToken); // sync localStorage with Redux
-            return;
-          }
-        }
-
-        // Logout if everything fails
-        dispatch(logout());
-        // localStorage.removeItem("accessToken");
-      } catch (error) {
-        console.error("Error checking auth status:", error);
-        dispatch(logout());
-        // localStorage.removeItem("accessToken");
+      if(response.ok){
+        const data= await response.json();
+        dispatch(login({userData: data.data.user}))
+        return;
       }
-    };
-     checkAuthStatus(); 
-  }, [dispatch, accessToken]);
+
+      //trying to refresh token if above failed
+      const refreshed= await refreshAccessToken();
+
+      if(refreshed){
+        const retryResponse= await fetch(`${conf.API_URL}/user/current` , {
+          method: "GET",
+          credentials:"include"
+        });
+
+        if(retryResponse.ok){
+          const data= await retryResponse.json();
+          dispatch(login({userData:data.data.user}));
+          return;
+        }
+      }
+      dispatch(logout());
+     } catch (error) {
+      console.error('error checking auth status' , error);
+      dispatch(logout());
+    }
+      
+     }
+
+     checkAuthStatus();
+    } , [dispatch]);
 
   return <RouterProvider router={router} />;
 };
