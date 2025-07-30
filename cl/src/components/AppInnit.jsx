@@ -13,46 +13,59 @@ const AppInnit = ({ router }) => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await fetch(`${conf.API_URL}/user/current`, {
-          method: "GET",
-          credentials: "include",
-        });
+        let token = accessToken || localStorage.getItem("accessToken");
 
-        if (response.ok) {
-          const data = await response.json();
-          localStorage.setItem("userData", JSON.stringify(data.data.user));
-          dispatch(login({ userData: data.data.user }));
-
-          return;
-        }
-
-        //trying to refresh token if above failed
-        const refreshed = await refreshAccessToken();
-
-        if (refreshed) {
-          const retryResponse = await fetch(`${conf.API_URL}/user/current`, {
+        if (token) {
+          const response = await fetch(`${conf.API_URL}/user/current`, {
             method: "GET",
             credentials: "include",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           });
 
-          if (retryResponse.ok) {
-            const data = await retryResponse.json();
-            localStorage.setItem("userData", JSON.stringify(data.data.user));
-            dispatch(login({ userData: data.data.user }));
-
+          if (response.ok) {
+            const data = await response.json();
+            dispatch(login({ userData: data.data, accessToken: token }));
+            localStorage.setItem("accessToken", token); // sync localStorage with Redux
             return;
           }
         }
+
+        // If no token or fetch failed → try to refresh token
+        const newAccessToken = await refreshAccessToken();
+
+        if (newAccessToken) {
+          const response = await fetch(`${conf.API_URL}/user/current`, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              Authorization: `Bearer ${newAccessToken}`,
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log("CURR USER DATA:::", data);
+            dispatch(
+              login({ userData: data.data.user, accessToken: newAccessToken })
+            );
+            localStorage.setItem("accessToken", newAccessToken); // sync localStorage with Redux
+            return;
+          }
+        }
+
+        // Logout if everything fails
         dispatch(logout());
+        localStorage.removeItem("accessToken");
       } catch (error) {
-        console.error("error checking auth status", error);
-        localStorage.removeItem("userData");
+        console.error("Error checking auth status:", error);
         dispatch(logout());
+        localStorage.removeItem("accessToken");
       }
     };
-
-    checkAuthStatus();
-  }, [dispatch]);
+     checkAuthStatus(); 
+  }, [dispatch, accessToken]);
 
   return <RouterProvider router={router} />;
 };
