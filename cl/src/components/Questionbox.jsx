@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Star} from 'lucide-react'
 import {Link} from 'react-router-dom'
+import ViewNotes from './ViewNotes';
 
-function Questionbox({title  , link , tags , revise , difficulty, createdAt}) {
+function Questionbox({title  , link , tags , revise , difficulty, createdAt , notes}) {
 
   const dateSolved= new Date(createdAt);
   const formattedDate= dateSolved.toLocaleDateString("en-GB")
@@ -11,6 +12,9 @@ function Questionbox({title  , link , tags , revise , difficulty, createdAt}) {
     medium:'text-yellow-500',
     hard: 'text-red-500'
   }
+
+  //for the notes box
+  const [openNotes , setOpenNotes]= useState(true)
  
   
   return (
@@ -39,6 +43,22 @@ function Questionbox({title  , link , tags , revise , difficulty, createdAt}) {
         </div>
       </div>
       
+      {notes && (
+        <div className='flex mr-4 mb-2'>
+           <button
+            type="button"
+            onClick={() => setOpenNotes(!openNotes)}
+            className=" text-[#ff9b22] px-4 py-1 rounded-full font-semibold"
+          >
+         <NotebookText size={30} />
+          </button>
+
+          <ViewNotes
+          notes={notes}
+          notesOpen={openNotes}
+          />
+        </div>
+      )}
     </div>
   )
 }
