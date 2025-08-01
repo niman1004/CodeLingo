@@ -56,7 +56,7 @@ function Heatmap() {
   }, [userData]);
 
   return (
-    <div className="bg-[#1f1f1f] mt-3 mr-4 p-6 rounded-xl">
+    <div className="bg-[#1f1f1f]  mr-4 p-6 rounded-xl">
       <div className="flex justify-between items-center ">
         <button
           onClick={handlePrev}

@@ -13,7 +13,7 @@ function StreakDisplay() {
   }, [userData]);
 
   return (
-    <div className="w-full flex flex-col items-start bg-[#1f1f1f] font-Onest rounded-2xl px-6 py-5 shadow-lg mt-3">
+    <div className="w-full flex flex-col items-start bg-[#1f1f1f] font-Onest rounded-2xl px-6 py-5 shadow-lg ">
       {/* Header */}
       <h2 className="text-white text-[22px] font-bold mb-3">Your Streak</h2>
 
