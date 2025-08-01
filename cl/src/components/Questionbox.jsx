@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Star} from 'lucide-react'
+import {Star , NotebookText} from 'lucide-react'
 import {Link} from 'react-router-dom'
 import ViewNotes from './ViewNotes';
 
