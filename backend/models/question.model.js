@@ -21,6 +21,11 @@ const QuestionSchema = new Schema(
     difficulty:{
       type: String
     },
+    notes:{
+      type: String ,
+      default:null , 
+      required: false
+    },
     tags: [
       {
         type: String,

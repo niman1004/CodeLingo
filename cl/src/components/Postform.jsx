@@ -5,36 +5,49 @@ import { useSelector, useDispatch } from "react-redux";
 import { useSubmitQuestion } from "../auth/questions.js";
 import { useGetCurrentUser } from "../auth/auth.js";
 import { setUserData } from "../store/authSlice.js";
+import Notebox from "./Notebox.jsx";
+import {NotebookText} from 'lucide-react'
 
 function Postform() {
   const userData = useSelector((state) => state.auth.userData);
   const submitQuestion = useSubmitQuestion();
   const getCurrentUser = useGetCurrentUser();
-  const dispatch= useDispatch()
+  const dispatch = useDispatch();
 
   const { register, handleSubmit, reset } = useForm();
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
 
+  //for the notebox
+  const [isNoteBoxOpen, setIsNoteBoxOpen] = useState(false);
+  const [notesContent, setNotesContent] = useState("");
+
+  const handleNoteSave = (note) => {
+    setNotesContent(note);
+    console.log("note saved", note);
+    setIsNoteBoxOpen(false)
+  };
+
   const onSubmit = async (formData) => {
     try {
-      const { title, "question-link": link, revise , difficulty } = formData;
-      
+      const { title, "question-link": link, revise, difficulty } = formData;
+
       const payload = {
         link,
         title,
         revise: revise,
         tags,
-        difficulty: difficulty
+        difficulty: difficulty,
+        notes: notesContent
       };
 
       const result = await submitQuestion(payload);
 
       if (result?.success) {
         alert("Question submitted successfully!");
-        const updatedUserData= await getCurrentUser()
-        if(updatedUserData){
-          dispatch(setUserData(updatedUserData))
+        const updatedUserData = await getCurrentUser();
+        if (updatedUserData) {
+          dispatch(setUserData(updatedUserData));
         }
         setTags([]);
         reset();
@@ -71,7 +84,7 @@ function Postform() {
         <button
           type="submit"
           form="progress-form"
-          className="bg-[#ff9b22] text-black border-[#ff9b22]  px-6 py-2 border duration-200 rounded-full font-bold font-Onest"
+          className="bg-[#ff9b22] text-black border-[#ff9b22] hover:bg-[#ff8922]  px-6 py-2 border duration-200 rounded-full font-bold font-Onest"
         >
           Submit
         </button>
@@ -91,6 +104,16 @@ function Postform() {
         onSubmit={handleSubmit(onSubmit)}
         className="mt-2"
       >
+        <div className="flex mr-4 mb-2">
+          <button
+            type="button"
+            onClick={() => setIsNoteBoxOpen(true)}
+            className=" text-[#ff9b22] px-4 py-1 rounded-full font-semibold"
+          >
+         <NotebookText size={30} />
+          </button>
+        </div>
+
         <div className="space-y-3 ml-4 mr-4">
           <Input
             {...register("question-link", { required: true })}
@@ -135,7 +158,6 @@ function Postform() {
 
           {/* Checkbox */}
           <div className="flex items-center space-x-4 text-white font-Onest">
-           
             <label className="flex items-center space-x-2 cursor-pointer">
               <input
                 type="checkbox"
@@ -162,6 +184,13 @@ function Postform() {
           </div>
         </div>
       </form>
+
+  <Notebox
+  isOpen={isNoteBoxOpen}
+  onClose={() => setIsNoteBoxOpen(false)}
+  onSave={handleNoteSave}
+/>
+
     </div>
   );
 }

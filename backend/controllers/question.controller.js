@@ -7,7 +7,7 @@ import { User } from "../models/user.model.js";
 
 const submitQuestion = asyncHandler(async (req, res) => {
   try {
-    const { link, title, revise, difficulty, tags  } = req.body;
+    const { link, title, revise, difficulty, notes , tags  } = req.body;
 
     if (!link || !title) {
       throw new ApiError(400, "link/title not provided");
@@ -37,6 +37,7 @@ const submitQuestion = asyncHandler(async (req, res) => {
       revise: revise || false,
       submittedBy: userId,
       difficulty,
+      notes: notes ,
       tags: validatedTags,
     });
 
