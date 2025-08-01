@@ -43,7 +43,7 @@ function Questionbox({title  , link , tags , revise , difficulty, createdAt , no
         </div>
       </div>
       
-      {notes && (
+      {true && (
         <div className='flex mr-4 mb-2'>
            <button
             type="button"
