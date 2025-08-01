@@ -5,14 +5,14 @@ import { login } from "../store/authSlice.js";
 const useSubmitQuestion = () => {
   const dispatch = useDispatch();
 
-  const submitQuestion = async ({ link, title, tags, revise , difficulty }) => {
+  const submitQuestion = async ({ link, title, tags, revise , difficulty , notes }) => {
     try {
       const response = await fetch(`${conf.API_URL}/user/submit-question`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ link, title, tags, revise, difficulty }),
+        body: JSON.stringify({ link, title, tags, revise, difficulty , notes}),
         credentials: "include"
       })
       console.log("QUESTION SUBMITTING TO BACKEND")
