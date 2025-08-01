@@ -14,7 +14,7 @@ function Questionbox({title  , link , tags , revise , difficulty, createdAt , no
   }
 
   //for the notes box
-  const [openNotes , setOpenNotes]= useState(true)
+  const [openNotes , setOpenNotes]= useState(false)
  
   
   return (
@@ -53,12 +53,13 @@ function Questionbox({title  , link , tags , revise , difficulty, createdAt , no
          <NotebookText size={30} />
           </button>
 
-          <ViewNotes
+         
+        </div>
+      )}
+       <ViewNotes
           notes={notes}
           notesOpen={openNotes}
           />
-        </div>
-      )}
     </div>
   )
 }
