@@ -29,31 +29,37 @@ const submitQuestion = asyncHandler(async (req, res) => {
       : [];
 
     // Set current date
-    const now = nowInput ? new Date(nowInput) : new Date();
-    const lastSubmitted = user.lastSubmitted ? new Date(user.lastSubmitted) : null;
+   function getDateOnly(date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
 
-    let curr = user.currStreak || 0;
-    let max = user.maxStreak || 0;
+const now = nowInput ? new Date(nowInput) : new Date();
+const lastSubmitted = user.lastSubmitted ? new Date(user.lastSubmitted) : null;
 
-    if (!lastSubmitted) {
-      curr = 1;
-    } else {
-      const diff = Math.floor((now - lastSubmitted) / (1000 * 60 * 60 * 24));
-      if (diff === 1) {
-        curr += 1;
-      } else if (diff > 1) {
-        curr = 1;
-      }
-      // diff === 0 → same day → no change
-    }
+let curr = user.currStreak || 0;
+let max = user.maxStreak || 0;
 
-    if (curr > max) max = curr;
+if (!lastSubmitted) {
+  curr = 1;
+} else {
+  const nowDate = getDateOnly(now);
+  const lastDate = getDateOnly(lastSubmitted);
 
-    user.currStreak = curr;
-    user.maxStreak = max;
-    user.lastSubmitted = now;
+  const diffInDays = Math.floor((nowDate - lastDate) / (1000 * 60 * 60 * 24));
 
-    const updatedUser = await user.save(); // Save streak updates first
+  if (diffInDays === 1) {
+    curr += 1;
+  } else if (diffInDays > 1) {
+    curr = 1;
+  } // diffInDays === 0 -> same day, no update
+}
+
+if (curr > max) max = curr;
+
+user.currStreak = curr;
+user.maxStreak = max;
+user.lastSubmitted = now;
+await user.save();
 
     const newQuestion = new Question({
       link,
