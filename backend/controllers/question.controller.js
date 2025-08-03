@@ -41,21 +41,25 @@ const submitQuestion = asyncHandler(async (req, res) => {
       tags: validatedTags,
     });
 
-    await newQuestion.save();
+    
 
     const now = req.body.now ? new Date(req.body.now) : new Date();
     const lastSubmitted = user.lastSubmitted || null;
     let curr = user.currStreak;
     let max = user.maxStreak;
 
+    await newQuestion.save();
+
     if (lastSubmitted) {
       const diff = Math.floor((now - new Date(lastSubmitted)) / (1000 * 60 * 60 * 24));
       if (diff === 1) {
         curr = curr + 1;
       } else if (diff > 1) {
+        console.log("Streak broken")
+
         curr = 1;
       }
-      // curr=curr+1; //using for testing
+    
     } else {
       curr = 0;
     }
