@@ -59,7 +59,7 @@ if (curr > max) max = curr;
 user.currStreak = curr;
 user.maxStreak = max;
 user.lastSubmitted = now;
-await user.save();
+const updatedUser = await user.save();
 
     const newQuestion = new Question({
       link,
