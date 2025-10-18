@@ -259,19 +259,16 @@ const getHeatmapData = asyncHandler(async (req, res) => {
 const getRandomTags= asyncHandler( async(req , res)=>{
   const userId= req.user._id;
   const tags= await Question.aggregate([
-    {$match : {submittedBy: new ObjectId(userId)}},
+    {$match : {submittedBy: userId}},
     {$unwind: "$tags"},
     { $group : {_id:"$tags" , count:{$sum : 1}}},
     {$sample : {size : 3}}
   ]).toArray();
 
-  if(tags.length >0){
+  
     const tagnames= tags.map(t=>t._id);
     return res.status(200).json(new ApiResponse(200 , tagnames , "random question tags for revision"))
-  }
-  else{
-    return res.status(201).json(new ApiResponse(201 , tagnames , "No questions found"))
-  }
+ 
 });
 
 export { registerUser, loginUser, logoutUser, refreshAcessToken, changeCurrentPassword, getCurrentUser, updateDailyGoal , getQuestionsSolved , getHeatmapData , getRandomTags };
