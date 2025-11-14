@@ -11,7 +11,7 @@ function App() {
     <div className='min-h-screen flex flex-wrap content-between bg-black'>
       <div className='w-full block'>
         <Header/>
-        <main className='mt-[80px]'>
+        <main>
           <Outlet/>
         </main>
 

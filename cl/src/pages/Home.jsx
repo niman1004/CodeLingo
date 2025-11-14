@@ -6,7 +6,7 @@ import Container from '../components/container/Container';
 
 function Home() {
   return (
-    <div className="w-full">
+    <div className="w-full mt-[80px]">
       <Container>
         <div className="flex flex-col lg:flex-row   p-4 bg-black space-y-4 lg:space-y-0 lg:space-x-4">
           

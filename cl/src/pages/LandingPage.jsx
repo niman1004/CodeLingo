@@ -4,7 +4,7 @@ import LandingPageIcon from "../assets/LandingPageIcon.svg";
 
 function LandingPage() {
   return (
-    <div className="h-screen flex flex-col justify-center px-10 md:px-20 bg-transparent">
+    <div className="flex flex-col justify-center px-10 md:px-20 bg-transparent">
       
       <div className="flex flex-col md:flex-row items-center justify-between gap-10">
 
