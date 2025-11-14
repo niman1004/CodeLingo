@@ -37,7 +37,7 @@ function Header() {
   return (
     <div className="fixed top-0 left-0 w-full z-50 bg-[#1f1f1f] py-4 shadow-md overflow-x-hidden">
       <div className="flex justify-between items-center px-6">
-        <Link to="/">
+        <Link to="/home">
           <h1 className="text-3xl font-bold font-Onest text-white transition duration-300 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-[#b9ff66] hover:to-[#ff9b22] cursor-pointer">
             CodeLingo
           </h1>

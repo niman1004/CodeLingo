@@ -27,7 +27,7 @@ function Login() {
 
       if (result.success) {
         alert("Login successful");
-        navigate("/");
+        navigate("/home");
       } else {
         setError("Invalid credentials");
       }

@@ -31,7 +31,7 @@ const SignUp = () => {
       });
 
       if(loginResponse.success){
-        navigate("/")
+        navigate("/home")
       }
       else{
         setError("There was an error logging into your new account")
