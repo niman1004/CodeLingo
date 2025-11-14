@@ -12,19 +12,27 @@ import AuthLayout from "./components/AuthLayout.jsx";
 import store from "./store/store.js";
 import { Provider } from "react-redux";
 import AppInnit from "./components/AppInnit.jsx";
-
+import LandingPage from "./pages/LandingPage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "/", element: <Home /> },
+      { path: "/", element: <LandingPage/> },
       {
         path: "/submission-history",
         // element: <SubmissionHistory />,
         element: (<AuthLayout authentication={true}>
           <SubmissionHistory />
         </AuthLayout>)
+      },
+      {
+        path: "/home" , 
+        element:(
+          <AuthLayout authentication={true}>
+            <Home/>
+          </AuthLayout>
+        )
       },
       {
         //to do:: add authentication stuff here

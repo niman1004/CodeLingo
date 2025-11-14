@@ -13,13 +13,17 @@ function AuthLayout({ children, authentication = true }) {
     } else if (!authentication && authStatus !== authentication) {
       //you dont have to log in to see the page but you are logged in
       //eg login page and sign up page
-      navigate("/");
+      navigate("/Home");
     }
     setLoader(false);
   }, [authStatus, authentication, navigate]);
 
-  if(loader){
-    return (<ClipLoader color='#3498db' size={50}/>)
+  if (loader) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <ClipLoader color="#3498db" size={50} />
+      </div>
+    );
   }
   else{
     return (
