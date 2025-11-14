@@ -4,19 +4,19 @@ import LandingPageIcon from "../assets/LandingPageIcon.svg";
 
 function LandingPage() {
   return (
-    <div className="flex flex-col justify-center px-10 md:px-20 bg-transparent">
+    <div className="flex flex-col mt-[80px] justify-center md:px-20 bg-transparent">
       
-      <div className="flex flex-col md:flex-row items-center justify-between gap-10">
+      <div className="flex flex-col md:flex-row items-center justify-between ">
 
         {/* LEFT: TEXT */}
-        <div className="md:w-1/2">
+        <div className="md:w-1/2 ml-[100px]">
           <h1 className="font-Onest text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#b9ff66] to-[#ff9b22] leading-tight">
             Code a Little. <br /> Grow a Lot.
           </h1>
 
           <p className="font-Onest text-white mt-6 text-lg md:text-xl opacity-90">
             Turn coding into a daily ritual.  
-            Track your progress, build habits, and level up like never before.
+            Track your progress, build habits,<br/> and level up like never before.
           </p>
 
           {/* BUTTONS */}
