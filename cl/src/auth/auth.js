@@ -74,7 +74,7 @@ const useLogout = () => {
         method: "POST",
         credentials: "include",
       });
-
+      
       const data = await response.json();
       
 
@@ -82,6 +82,7 @@ const useLogout = () => {
         console.log("Logout successful:", data.message);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        console.log("LOGOUT- ACCESS AND REFRESH TOKEN REMOVED")
         dispatch(logout());
       } else {
         console.error("Logout failed:", data.message);
