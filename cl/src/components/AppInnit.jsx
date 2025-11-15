@@ -34,7 +34,7 @@ const AppInnit = ({ router }) => {
 
         // If no token or fetch failed → try to refresh token
         const newAccessToken = await refreshAccessToken();
-
+        console.log("ACCESS TOKEN NOT FOUND, REFRESH TOKEN RUN")
         if (newAccessToken) {
           const response = await fetch(`${conf.API_URL}/user/current`, {
             method: "GET",
@@ -57,11 +57,15 @@ const AppInnit = ({ router }) => {
 
         // Logout if everything fails
         dispatch(logout());
-        localStorage.removeItem("accessToken");
+         localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("userData")
       } catch (error) {
         console.error("Error checking auth status:", error);
         dispatch(logout());
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("userData")
       }
     };
      checkAuthStatus(); 
