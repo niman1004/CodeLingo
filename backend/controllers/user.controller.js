@@ -262,7 +262,7 @@ const getRandomTags= asyncHandler( async(req , res)=>{
     {$match : {submittedBy: userId}},
     {$unwind: "$tags"},
     { $group : {_id:"$tags" , count:{$sum : 1}}},
-    {$sample : {size : 2}}
+    {$sample : {size : 3}}
   ]);
 
   
