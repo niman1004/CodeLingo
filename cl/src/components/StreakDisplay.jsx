@@ -61,7 +61,7 @@ function StreakDisplay() {
             {revTags.map((tag, idx) => (
               <button
                 key={idx}
-                onClick={() => navigate(`/questions?tag=${tag}`)}
+                onClick={() => navigate(`/submission-history?tag=${tag}`)}
                 className="px-3 py-1 rounded-full text-sm
                    bg-[#2a2a2a] text-[#ff9b22]
                    hover:bg-[#ff9b22] hover:text-black
