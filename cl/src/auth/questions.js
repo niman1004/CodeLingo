@@ -86,4 +86,32 @@ const useGetSubmittedQuestions = () => {
   return getSubmittedQuestions
 }
 
-export { useSubmitQuestion, useGetHeatmapData, useGetSubmittedQuestions }
+
+const useGetRevisionTags = ()=>{
+  const getRevisionTags= async ()=>{
+    try {
+
+      const response= await fetch(`${conf.API_URL}/user/revision-tags` , {
+        method: "GET",
+        headers:{
+          "Content-Type": "application/json",
+        },
+        credentials: "include"
+      })
+
+      const data= await response.json();
+      if(! response.ok){
+        throw new Error(data.message || "something went wrong while fetching revision tags");
+      }
+      console.log(data)
+      console.log( "revision tag types" + typeof(data.data))
+      return {success: true , message: data.message , data: data.data};
+      
+    } catch (error) {
+      return {success: false , message:error.message , data: []}
+    }
+  }
+
+  return {getRevisionTags}
+}
+export { useSubmitQuestion, useGetHeatmapData, useGetSubmittedQuestions , useGetRevisionTags }
