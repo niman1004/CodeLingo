@@ -3,6 +3,7 @@ import Questionbox from "../components/Questionbox";
 import { useGetSubmittedQuestions } from "../auth/questions";
 import { useSelector } from "react-redux";
 import Container from "../components/container/Container";
+import { useSearchParams } from "react-router-dom";
 
 function SubmissionHistory() {
   const userData = useSelector((state) => state.auth.userData);
@@ -10,6 +11,19 @@ function SubmissionHistory() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const [searchParams] = useSearchParams();
+  const tagFromUrl = searchParams.get("tag");
+  const [tagFilter, setTagFilter] = useState(null);
+
+  useEffect(() => {
+    if (tagFromUrl) {
+      setTagFilter(tagFromUrl);
+      setFilter(tag);
+    } else {
+      setTagFilter(null);
+    }
+  }, [tagFromUrl]);
+
   const [selectedMonth, setSelectedMonth] = useState(null);
   const fetchingQuestions = async () => {
     try {
@@ -30,7 +44,6 @@ function SubmissionHistory() {
     fetchingQuestions();
   }, []);
 
- 
   if (loading) {
     return (
       <div className="w-full text-center text-white font-Onest py-10 animate-pulse">
@@ -46,19 +59,21 @@ function SubmissionHistory() {
       </div>
     );
   }
-  
 
   const uniqueMonths = [
-    ...new Set(questions.map(q=>q.createdAt?.slice(0 , 7)))
-  ].filter(Boolean)
+    ...new Set(questions.map((q) => q.createdAt?.slice(0, 7))),
+  ]
+    .filter(Boolean)
     .sort((a, b) => b.localeCompare(a));
 
-   
   const filteredQuestions = questions.filter((q) => {
     if (filter === "revision") return q.revise === true;
-    if(filter==="month" && selectedMonth){
-      const qMonth= q.createdAt?.slice(0 , 7)
-      return qMonth===selectedMonth
+    if (filter === "month" && selectedMonth) {
+      const qMonth = q.createdAt?.slice(0, 7);
+      return qMonth === selectedMonth;
+    }
+    if (filter === "tag" && tagFilter) {
+      return q.tags?.includes(tagFilter);
     }
     return true; // for 'all'
   });
@@ -66,6 +81,13 @@ function SubmissionHistory() {
   return (
     <Container>
       <div className="flex gap-4 items-center justify-center mt-4 text-white font-Onest">
+        {tagFilter && (
+          <div className="text-center text-[#b9ff66] font-Onest mt-3">
+            Showing questions tagged with{" "}
+            <span className="font-bold">#{tagFilter}</span>
+          </div>
+        )}
+
         <button
           className={`px-4 py-1 rounded ${
             filter === "all" ? "bg-[#b9ff66] text-black" : "bg-gray-700"
