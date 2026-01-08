@@ -18,7 +18,7 @@ function SubmissionHistory() {
   useEffect(() => {
     if (tagFromUrl) {
       setTagFilter(tagFromUrl);
-      setFilter(tag);
+      setFilter("tag");
     } else {
       setTagFilter(null);
     }
