@@ -41,7 +41,21 @@ function StreakDisplay() {
           <Flame size={56} strokeWidth={2.5} />
         </div>
 
-        {/* Revision Tags */}
+       
+
+        {/* Text Info */}
+        <div className="text-white">
+          <div className="text-[30px] font-extrabold leading-tight">
+            {currStreak > 1 ? currStreak + " Days" : currStreak + " Day"}
+          </div>
+          <div className="text-base text-gray-400 mt-1">
+            Best streak: {maxStreak} days
+          </div>
+          <div className="text-base mt-1">
+            {currStreak === 0 ? "Start solving now" : "Keep the streak alive!"}
+          </div>
+        </div>
+         {/* Revision Tags */}
         {revTags.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-4">
             {revTags.map((tag, idx) => (
@@ -58,19 +72,6 @@ function StreakDisplay() {
             ))}
           </div>
         )}
-
-        {/* Text Info */}
-        <div className="text-white">
-          <div className="text-[30px] font-extrabold leading-tight">
-            {currStreak > 1 ? currStreak + " Days" : currStreak + " Day"}
-          </div>
-          <div className="text-base text-gray-400 mt-1">
-            Best streak: {maxStreak} days
-          </div>
-          <div className="text-base mt-1">
-            {currStreak === 0 ? "Start solving now" : "Keep the streak alive!"}
-          </div>
-        </div>
       </div>
     </div>
   );
